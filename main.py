@@ -1,6 +1,7 @@
 import tkinter as tk
+from tkinter import ttk
 
-# Function to handle counter operations
+# Function to update the counter value
 def update_counter(operation):
     global counter
     if operation == "increment":
@@ -10,28 +11,47 @@ def update_counter(operation):
     elif operation == "reset":
         counter = 0
 
-    # Update the label with the new counter value
-    counter_label.config(text=f"Counter: {counter}")
+    counter_label.config(text=f"{counter}")
 
-# Initialize the main Tkinter window
+
+# Initialize the main application window
 root = tk.Tk()
-root.title("Counter Application")
-root.geometry("300x200")
+root.title("Modern Counter App")
+root.geometry("400x400")
+root.configure(bg="#003366")  # Background color
 
-# Initialize the counter variable
+# Counter value
 counter = 0
 
-# Create the GUI widgets
-counter_label = tk.Label(root, text=f"Counter: {counter}", font=("Arial", 16))
-increment_button = tk.Button(root, text="Increment", command=lambda: update_counter("increment"))
-decrement_button = tk.Button(root, text="Decrement", command=lambda: update_counter("decrement"))
-reset_button = tk.Button(root, text="Reset", command=lambda: update_counter("reset"))
+# Styles
+button_style = {
+    "font": ("Arial", 18, "bold"),
+    "bg": "#007BFF",
+    "fg": "white",
+    "relief": "flat",
+    "width": 5,
+}
+label_style = {
+    "font": ("Arial", 48, "bold"),
+    "bg": "#003366",
+    "fg": "white",
+}
 
-# Place the widgets on the window
-counter_label.pack(pady=20)
-increment_button.pack(side=tk.LEFT, padx=20)
-decrement_button.pack(side=tk.LEFT, padx=20)
-reset_button.pack(side=tk.LEFT, padx=20)
+# Counter display
+counter_label = tk.Label(root, text=f"{counter}", **label_style)
+counter_label.pack(pady=40)
+
+# Decrement button
+decrement_button = tk.Button(root, text="-", command=lambda: update_counter("decrement"), **button_style)
+decrement_button.place(x=50, y=200)
+
+# Increment button
+increment_button = tk.Button(root, text="+", command=lambda: update_counter("increment"), **button_style)
+increment_button.place(x=300, y=200)
+
+# Reset button
+reset_button = tk.Button(root, text="Reset", command=lambda: update_counter("reset"), **button_style)
+reset_button.pack(side=tk.BOTTOM, pady=30)
 
 # Run the application
 root.mainloop()
