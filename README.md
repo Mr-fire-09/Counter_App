@@ -98,7 +98,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 If you have any questions or suggestions, feel free to reach out:
 
 - GitHub: [Neeraj-Verma ](https://github.com/Neeraj99990)
-- Email: your-email@example.com
+- Email: neerajsingh009424@gmail.com
+- 
 ```
 
 ---
