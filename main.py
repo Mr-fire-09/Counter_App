@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import ttk
 
 # Function to update the counter value
 def update_counter(operation):
@@ -11,11 +10,54 @@ def update_counter(operation):
     elif operation == "reset":
         counter = 0
 
-    counter_label.config(text=f"{counter}")
+    # Trigger fade-out animation
+    fade_out()
+
+# Function to fade out the label
+def fade_out():
+    current_color = counter_label.cget("fg")
+    if current_color == "#FFFFFF":  # If already white, skip fade-out
+        fade_in()
+        return
+
+    r, g, b = root.winfo_rgb(current_color)
+    r, g, b = r // 256, g // 256, b // 256  # Convert to 8-bit RGB
+
+    # Gradually reduce opacity (fade to white)
+    if r < 255 or g < 255 or b < 255:
+        r = min(r + 15, 255)
+        g = min(g + 15, 255)
+        b = min(b + 15, 255)
+        new_color = f"#{r:02x}{g:02x}{b:02x}"
+        counter_label.config(fg=new_color)
+        root.after(30, fade_out)  # Continue fading
+    else:
+        counter_label.config(text=f"{counter}")
+        fade_in()  # Start fade-in after fade-out completes
+
+# Function to fade in the label
+def fade_in():
+    current_color = counter_label.cget("fg")
+    if current_color == "#FFFFFF":  # If already white, start fading to original color
+        r, g, b = 255, 255, 255
+    else:
+        r, g, b = root.winfo_rgb(current_color)
+        r, g, b = r // 256, g // 256, b // 256  # Convert to 8-bit RGB
+
+    # Gradually increase opacity (fade to original color)
+    if r > 0 or g > 0 or b > 0:
+        r = max(r - 15, 0)
+        g = max(g - 15, 0)
+        b = max(b - 15, 0)
+        new_color = f"#{r:02x}{g:02x}{b:02x}"
+        counter_label.config(fg=new_color)
+        root.after(30, fade_in)  # Continue fading
+    else:
+        counter_label.config(fg="white")  # Reset to original color
 
 # Initialize the main application window
 root = tk.Tk()
-root.title("Modern Counter App")
+root.title("Modern Counter App with Animation")
 root.geometry("600x600")  # Adjusted the window size
 root.configure(bg="#003366")  # Background color
 
@@ -34,7 +76,7 @@ button_style = {
 label_style = {
     "font": ("Arial", 48, "bold"),
     "bg": "#003366",
-    "fg": "white",
+    "fg": "white",  # Initial text color
 }
 
 # Counter display
